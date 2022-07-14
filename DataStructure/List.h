@@ -132,10 +132,11 @@ LNode * GetElem(LinkList L,int i){
   return p;  #如果i超过链表的长度，p = NULL
 }
 
-#尾插法建立单链表
+#尾插法建立带头结点的单链表
 LinkList List_TailInsert(LinkList &L){
   int x;  #设Elemtype 为 int
-  L = (LinkList) malloc(sizeof(LNode));
+  L = (LinkList) malloc(sizeof(LNode));  #申请内存
+  L->next = NULL:
   LNode *s,*p = L;
   scanf("%d",&x);  #插入的数据就是x
   while(x != 999){
@@ -149,6 +150,22 @@ LinkList List_TailInsert(LinkList &L){
   return L;
 }
 
+#头插法建立带头结点的单链表
+LinkList List_HeadList(LinkList &L){
+  int x;
+  L = (LinkList)malloc (sizeof(LNode)); #申请内存
+  L->next = NULL;  #创建带有头结点
+  LNode *s;  #与尾插法相比少了个指针
+  scanf("%d",&x);
+  while(x != 999){
+    s = (LNode *)malloc(sizeof(LNode));
+    s->data = x;
+    s->next = L->next;
+    L ->next = s;
+    scanf("%d",&x);
+  }
+  return L;
+}
 
 
 
