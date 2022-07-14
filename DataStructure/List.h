@@ -33,3 +33,22 @@ bool empty(LinkList L){
   else
     return false;
 }
+
+#带头结点的按位序插入
+bool insertList_withhead(LinkList &L,int i,Elemtype e){
+  if(i < 1)
+    return false;
+  LNode *p = L;
+  int j = 0;
+  while(p != NULL && j < i-1){ # p!=NULL判断是否位序i超过指针长度，j < i-1想找到第i-1个结点
+      p = p->next;
+      j++;
+   }
+  LNode *s = (LNode *) malloc(sizeof(LNode));
+  s ->data = e;
+  s->next = p->next;
+  p->next = s;
+  return true;
+}
+
+
