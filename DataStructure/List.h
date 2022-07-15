@@ -167,6 +167,104 @@ LinkList List_HeadList(LinkList &L){
   return L;
 }
 
+#双链表
+typedef struct DNode{
+  Elemtype data;
+  struct DNode *prior,*next;   #prior表示前驱
+}DNode,*DLinkList;
+
+#初始化双链表（带头结点）
+#要想判断双链表是否为空，判断L->next == NULL 即可
+bool initDLinkList(DLinkList &L){
+  L = (DNode *)malloc(sizeof(DNode));  #分配一个头结点
+  if(L == NULL)
+    return false;
+  L->prior = NULL;   #头结点的prior永远指向NULL
+  L->next = NULL;
+  return true;
+  }
+
+#前插操作：找到要插入的结点p，然后根据p->prior找到前插的位置，进行后插操作即可
+#按位序插入：找到第i-1个结点，进行后插操作
+#双链表的插入----后插操作：在p结点之后插入结点s(两个参数:结点p 结点s)
+bool InsertNextDNode(DNode *p,DNode *s){
+  if(p == NULL || s == NULL)   #非法参数
+    return false;
+  s->next = p->next;
+  if(p->next != NULL)   #判断p是否是最后一个结点,若是最后一个，则p->next = NULL
+    p->next->prior = s;
+  s->prior = p;
+  p->next = s;
+  return true;
+}
+
+#双链表的删除，删除结点p的后继结点(一个参数：结点p)
+bool DeleteDNode(DNode *p){
+  # p=NULL表明p非法，p->next=NULL表示p是最后一个结点，没有后继
+  if(p == NULL || p->next == NULL)  
+    return fasle;
+  DNode * q = p->next;
+  p->next = q->next;
+  if(q->next != NULL)  #p不是倒数第二个结点,若为倒数第二个，则p->next=NULL
+     p->next->prior = p;
+  free(q);   #释放结点空间
+  return true;
+}
+
+#销毁双链表(带头结点)
+void destoryList(DLinkList &L){
+  while(L->next != NULL)
+    DeleteDNode(L);   #按照双链表的删除
+  free(L);   #释放头结点
+  L = NULL;   #头结点指向NULL
+}
+
+#循环链表的初始化
+bool InitDLinkList(DLinkList &L){
+  L = (DNode *)malloc(sizeof(DNode));  #先分配空间
+  if(L == NULL)
+    return false;
+  #双链表的初始化
+  L->prior = L;  #头结点的prior指向头结点
+  L->next = L;   #头结点的next指向头结点
+  
+  #单链表的初始化
+  L->next = L;
+  
+  return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
