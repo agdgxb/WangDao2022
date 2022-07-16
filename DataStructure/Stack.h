@@ -37,4 +37,23 @@ bool Pop(SqStack &S,ElemType &x){
 typedef struct Linknode{
   ElemType data;
   struct Linknode *next;
-}*LiStack;
+}LiStack;
+
+#不带头结点的入栈操作(注意参数和返回值，以及malloc)
+LiStack * Pop(LiStack *s,ElemType a){
+  LiStack *tmp = (LiStack *)malloc(sizeof(LiStack)); 
+  tmp->data = a;
+  tmp->next = s;
+  s = tmp;
+  return s;
+}
+
+
+#不带头结点的出栈操作(注意参数和返回值，以及malloc)
+LiStack * Push(LiStack *s){
+  if(s == NULL)
+    return false;
+  LiStack *tmp = s;  #tmp即要弹出的栈顶结点
+  s = s->next;
+  return s;
+}
