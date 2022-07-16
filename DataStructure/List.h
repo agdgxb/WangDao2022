@@ -1,6 +1,22 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+#定义顺序表(静态分配空间)
+#define MaxSize 10
+typedef struct{
+  Elemtype data[MaxSize];  #顺序表的元素
+  int length;   #顺序表的当前长度
+}SqList;
+
+#动态分配空间方式
+typedef struct{
+  Elemtype *data;   #指示动态分配数组的指针
+  int MaxSize,length;   #数组的最大容量和当前长度
+}SqList;
+L.data = (Elemtype *)malloc(sizeof(Elemtype)*InitSize);  #初始动态分配
+然后利用 L.data[i]进行访问即可
+
+
 #定义单链表
 typedef struct LNode {
   int data;
