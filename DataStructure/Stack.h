@@ -32,3 +32,9 @@ bool Pop(SqStack &S,ElemType &x){
   top--;
   return true;
 }
+
+#栈的链式存储类型描述
+typedef struct Linknode{
+  ElemType data;
+  struct Linknode *next;
+}*LiStack;
