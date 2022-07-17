@@ -1,5 +1,6 @@
-#第三章 栈
+#第三章 栈、队列和数组
 
+#3.1 栈
 #顺序栈的定义
 #define MaxSize 100    #定义该栈所能包含的最大个数
 typedef struct{
@@ -57,3 +58,37 @@ LiStack * Push(LiStack *s){
   s = s->next;
   return s;
 }
+
+
+
+#3.2  队列
+#队列的顺序定义(静态申请内存空间)
+typedef struct {
+  ElemType data[MaxSize];
+  #定义队头指针front指向队头元素,队尾指针rear指向队尾元素的下一个位置（即下一个要插入的位置）
+  int front,rear;  
+}
+
+#初始化队列
+void InitQueue(SqQueue &Q){
+  Q.front = Q.rear = 0;  #初始化时将队头指针、队尾指针指向0
+}   
+#队列判空时只需要判断Q.front == Q.rear 即可
+
+#入队 注意判断队满的条件
+bool EnQueue(SqQueue &Q,ElemType x){
+  if( (Q.rear + 1) % MaxSize == Q.front)  #判断队满的条件
+    return false;
+  Q.data[Q.rear] = x;
+  Q.rear =( Q.rear + 1 ) % Maxsieze;
+  return true;
+}
+
+
+
+
+
+
+
+
+
