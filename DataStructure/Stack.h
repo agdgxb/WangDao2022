@@ -75,12 +75,100 @@ void InitQueue(SqQueue &Q){
 }   
 #队列判空时只需要判断Q.front == Q.rear 即可
 
-#入队 注意判断队满的条件
+#入队(从队尾进行插入) 注意判断队满的条件
 bool EnQueue(SqQueue &Q,ElemType x){
+  #队尾指针指向的是队尾元素的下一个位置，此时队列浪费一个空间无法存放数据元素
   if( (Q.rear + 1) % MaxSize == Q.front)  #判断队满的条件
     return false;
   Q.data[Q.rear] = x;
   Q.rear =( Q.rear + 1 ) % Maxsieze;
+  return true;
+}
+
+
+#出队(从队头进行删除) 注意判断队空的条件
+bool DeQueue(SqQueue &Q,ElemType &x){
+  if(Q.front == Q.rear)  #判断条件
+    return false;
+  x = Q.data[Q.front];
+  Q.front = (Q.front + 1) % MaxSize;
+  return true;
+}
+
+#队列的链式实现
+typedef struct LinkNode{  #链式队列结点
+  ElemType data;
+  struct LinkNode *next;
+}LinkNode;
+typedef struct{   #链式队列
+  LinkNode *front,*rear;
+}LinkQueue;
+
+#带头结点的初始化,此时判空判断 Q.front == Q.rear
+bool InitQueue_withhead(LinkQueue &Q){
+  #初始时front、rear都指向头结点，利用malloc建立头结点
+  Q.front = Q.rear =(LinkQueue *)malloc(sizeof(LinkQueue));
+  Q.front->next = NULL;
+  return true;
+}
+
+#不带头结点的初始化,判空需判断Q.front == NULL即可
+bool InitQueue_nohead(LinkQueue &Q){
+  Q.front = NULL;
+  Q.rear = NULL;
+}
+
+#入队（带头结点）
+void EnQueue(LinkQueue &Q,ElemType x){
+  #先创建结点s，将x->data = x；
+  LinkNode *s = (LinkNode *)malloc(sizeof(LinkNode));
+  s->data = x;
+  s->next = NULL;
+  Q.rear->next = s;  #新结点插入到rear之后
+  Q.rear = s;  #修改表尾指针
+}
+
+#入队（不带头结点）
+void EnQueue(LinkQueue &Q,ElemType x){
+  LinkNode *s = (LinkNode *)malloc(sizeof(LinkNode));
+  s->data = x;
+  s->next = NULL;
+  #判断插入的是否是第一个元素
+  if(Q.front == NULL){  #是第一个元素，此时队头队尾指针都指向s
+    Q.front = s;
+    Q.rear = s;
+  }
+  else {
+    Q.rear->next = s;
+    Q.rear = s;
+  }
+}
+
+#出队（带头结点）,此时队头指针指向头结点
+bool DeQueue(LinkQueue &Q,ElemType &x){
+  if(Q.front == Q.rear)  #队列为空，注意判断条件
+    return false;
+  LinkQueue *p = Q.front->next;
+  x = p->data;
+  Q.front->next = p->next;
+  if(Q.rear == p)   #判断出队的结点是否是最后一个结点
+    Q.rear = Q.front;
+  free(p);   #释放结点空间
+  return true;
+}
+
+#出队（不带头结点）
+bool DeQueue(LinkQueue &Q,ElemType &x){
+  if(Q.front == NULL)
+    return false;
+  x = Q.front[data];
+  LinkNode *p = Q.front;
+  Q.front = p->next;
+  if(p == Q.rear){  #判断出队的结点是否是最后一个结点
+    Q.front = NULL;
+    Q.rear = NULL;
+  }
+  free(p);
   return true;
 }
 
