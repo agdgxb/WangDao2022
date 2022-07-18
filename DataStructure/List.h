@@ -123,7 +123,7 @@ bool deleteList_withhead(LinkList &L,int i,ElemType &e){
   return true;
 }
 
-#删除指定结点
+#删除指定结点，删除结点p的后一个结点
 #将q = p->next，将q的data换到p上，然后删除q即可
 bool deleteNode(LNode *p){
   if(p == NULL)
@@ -135,7 +135,7 @@ bool deleteNode(LNode *p){
   return true;
 }
 
-#按位查找，返回一个结点
+#按位查找带头结点的单链表，返回一个结点
 LNode * GetElem(LinkList L,int i){
   if(i < 0)
     ruturn NULL;  #注意返回值
