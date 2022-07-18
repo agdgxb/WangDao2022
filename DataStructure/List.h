@@ -166,6 +166,29 @@ LinkList List_TailInsert(LinkList &L){
   return L;
 }
 
+#尾插法建立不带头结点的单链表
+LinkList List_TailInsert(LinkList &L){
+  int x;
+  LNode *p = L;   #为不为空的单链表插入做准备
+  scanf("%d",&x);
+  while(x != 999){
+    if(L == NULL){
+      LNode *s = (LNode *)malloc(sizeof(LNode));
+      s->data = x;
+      L = s;
+      p = L;  #为
+    }
+    else {
+      LNode *s = (LNode *)malloc(sizeof(LNode));
+      s->data = x;
+      p->next = s;
+      p = s;
+    }
+    scanf("%d",&x);
+  }
+  return L;
+}
+
 #头插法建立带头结点的单链表
 LinkList List_HeadList(LinkList &L){
   int x;
@@ -178,6 +201,20 @@ LinkList List_HeadList(LinkList &L){
     s->data = x;
     s->next = L->next;
     L ->next = s;
+    scanf("%d",&x);
+  }
+  return L;
+}
+
+#头插法建立不带头结点的单链表
+LinkList List_HeadList(LinkList &L){
+  int x;
+  scanf("%d",&x);
+  while(x != 999){
+    s = (LNode *)malloc(sizeof(LNode));
+    s->data = x;
+    s->next = L;
+    L = s;
     scanf("%d",&x);
   }
   return L;
