@@ -32,3 +32,20 @@ int Index(SString S,SString T){
   else
     return 0;
 }
+
+#KMP算法,根据next数组进行匹配操作
+int KMP_Index(SString S,SString T,int next[]){
+  int i = 1,j = 1;
+  while(i <= S.length && j <= T.length){
+    if(j == 0 || S[i] == T[j]){  #j = 0表示二者第一个字符不匹配，需要将i和j都加1
+      i++;
+      j++;
+    }
+    else 
+      j = next[j];
+  }
+  if(j > T.length)
+    return i - T.length;
+  else
+    return 0;
+}
