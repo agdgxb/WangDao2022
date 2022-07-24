@@ -114,7 +114,11 @@ ThreadNode *NextNode(ThreadNode *p){
   else
     return p->rchild;
 }
-
+#对中序线索化二叉树进行中序遍历(利用线索实现的非递归算法)
+void InOrder(ThreadNode *T){
+  for(ThreadNode *p = FirstNode(T);p != NULL;p = NextNode(p))
+    visit(p);
+}
 
 
 
