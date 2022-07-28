@@ -23,3 +23,42 @@ typedef struct{
   AdjList vertices;  #邻接表
   int vexnum,arcnum; #当前的顶点数,边数
 }ALGraph;
+
+
+#图的广度优先遍历BFS
+bool visited[Max_Vertex_Num];   #用来判断该结点是否被访问过
+void BFSTraverse(Graph G){
+  for(int i = 0; i < G.vernum;i++)
+    visited[i] = false;   #初始化,都未被访问过
+  InitQueue(Q);   #初始化辅助队列
+  for(int i = 0;i < G.vernum;i++){  
+    if(visited[i] == false)   #对每个连通分量遍历一次,共需要BFS次数 = 连通分量个数
+      BFS(G,i);
+  }
+}
+void BFS(Graph G,int i){
+  visit(i);
+  visited[i] = true;
+  EnQueue(Q,i);   #顶点i入队
+  while(!isEmpty(Q)){  #队列不为空
+    DeQueue(i);  #i出队
+    for(j = FirstNeighbor(G,i);j >=0; j = NextNeighbor(G,i,j)){ #j为i的第一个相邻结点，遍历i的所有相邻结点
+      if(visited[j] == false){  #判断该结点是否被访问过
+        visit(j);
+        visited[j] = true;
+        EnQueue(j);
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
