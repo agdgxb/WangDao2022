@@ -41,17 +41,36 @@ void BFS(Graph G,int i){
   visited[i] = true;
   EnQueue(Q,i);   #顶点i入队
   while(!isEmpty(Q)){  #队列不为空
-    DeQueue(i);  #i出队
+    DeQueue(Q,i);  #队头i出队
     for(j = FirstNeighbor(G,i);j >=0; j = NextNeighbor(G,i,j)){ #j为i的第一个相邻结点，遍历i的所有相邻结点
       if(visited[j] == false){  #判断该结点是否被访问过
         visit(j);
         visited[j] = true;
-        EnQueue(j);
+        EnQueue(Q,j);
       }
     }
   }
 }
 
+
+#图的深度优先遍历
+bool visited[Max_Vertex_Num];
+void DFSTraverse(Graph G){
+  for(i = 0;i < G.vertex;i++)  #初始化
+    visited[i] = false;
+  for(i = 0;i < G.vertex;i++){
+    if(visited[i] == false)  #为访问过,进行深度优先遍历
+      DFS(G,i);
+  }
+}
+void DFS(Graph G,int v){  #从结点v出发，深度优先遍历图G
+  visit(v);
+  visited[v] = true;
+  for(w = FirstNeighbor(G,v);w >= 0;w = NextNeighbor(G,v,w)){  #进行递归
+    if(visited[w] == false)
+      DFS(w);
+  }
+}
 
 
 
