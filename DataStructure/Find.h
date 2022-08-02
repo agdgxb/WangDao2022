@@ -18,7 +18,10 @@ int BST_Insert(BiTree &T,ElemType key){
    T->lchild = T->rchild = NULL;
    return 1;  #返回1,则表示成功插入
   }
-  else if(key == T->data)  #在二叉排序树种找到了要插入的结点
+  else if(key == T->data)  #在二叉排序树种找到了要插入的结点,插入失败
     return 0;  
-              
+  else if(key < T->data)
+    return  BST_Insert(T->lchild,key);
+  else if(key > T->data)
+    return  BST_Insert(T->lchild,key);
 }
